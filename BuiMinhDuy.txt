@@ -1,0 +1,4 @@
+phân nhánh : git checkout ...
+check branch : git branch
+
+
