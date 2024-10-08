@@ -1,0 +1,18 @@
+.authen-template{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20240731/pngtree-beautiful-koi-fish-swimming-image_15937242.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+}
+.authen-template__form{
+    width: 500px;
+    height: 95vh;
+    background-color: white;
+    margin-left: 1400px;
+    border-radius: 12px;
+    padding:30px
+    
+}
