@@ -12,7 +12,7 @@ import { useForm } from "antd/es/form/Form";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import "./index.css";
+import "./user.css";
 
 function UserManagementPage() {
   const columns = [
@@ -20,24 +20,26 @@ function UserManagementPage() {
       title: "ID",
       dataIndex: "Id",
       key: "Id",
+      width: "5%",
     },
     {
       title: "Username",
       dataIndex: "Username",
       key: "Username",
+      width: "10%",
     },
     {
-      title: "User's account",
+      title: "Account",
       dataIndex: "userId",
       key: "userId",
     },
     {
-      title: "User's password",
+      title: "Password",
       dataIndex: "password",
       key: "password",
     },
     {
-      title: "User's name",
+      title: "Username",
       dataIndex: "Name",
       key: "Name",
     },
@@ -46,6 +48,7 @@ function UserManagementPage() {
       dataIndex: "Point",
       key: "Point",
       sorter: (a, b) => a.Point - b.Point, // Thay đổi từ bonusScore thành point
+      width: "7%",
     },
     {
       title: "Address",
@@ -61,6 +64,7 @@ function UserManagementPage() {
       title: "Status",
       dataIndex: "Status",
       key: "Status",
+      width: "7%",
     },
     {
       title: "Phone",
@@ -68,12 +72,12 @@ function UserManagementPage() {
       key: "Phone",
     },
     {
-      title: "Action",
+      title: "Edit",
       dataIndex: "Id",
       key: "Id",
-      render: (Id, user) => {
+      render: (user) => {
         return (
-          <>
+          <div className="action-buttons">
             <Button
               type="primary"
               onClick={() => {
@@ -83,16 +87,25 @@ function UserManagementPage() {
             >
               EDIT
             </Button>
-            <Popconfirm
-              onConfirm={() => handleDeleteByID(Id)}
-              title="Delete"
-              description="Are you sure?"
-            >
-              <Button type="primary" danger>
-                DELETE
-              </Button>
-            </Popconfirm>
-          </>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Disabled",
+      dataIndex: "Id",
+      key: "Id",
+      render: (Id) => {
+        return (
+          <Popconfirm
+            onConfirm={() => handleDeleteByID(Id)}
+            title="Delete"
+            description="Are you sure?"
+          >
+            <Button type="primary" danger>
+              DISABLE
+            </Button>
+          </Popconfirm>
         );
       },
     },
@@ -167,6 +180,8 @@ function UserManagementPage() {
         columns={columns}
         bordered
         className="custom-table-border"
+        pagination={{ pageSize: 10 }} // Hiển thị 10 item mỗi trang
+        scroll={{ y: 1000 }} // Tạo thanh cuộn dọc khi bảng có nhiều dữ liệu
       />
 
       <Modal

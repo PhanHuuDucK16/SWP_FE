@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import "./login.css"; // Import file CSS
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -20,11 +22,13 @@ function LoginPage() {
         userID: values.userId,
         password: values.password,
       });
-      dispatch(api(response.data));
-      const { roleId, token } = response.data;
-      console.log(response.data);
-      // Lưu token vào localStorage
+
+      const { userID, roleId, token } = response.data;
+
+      // Lưu thông tin đăng nhập vào localStorage
       localStorage.setItem("token", token);
+      localStorage.setItem("userID", userID); // Lưu userID
+      localStorage.setItem("roleId", roleId); // Lưu roleId
 
       // Điều hướng dựa trên roleId
       if (roleId === "ADMIN" || roleId === "MANAGER") {
@@ -32,6 +36,7 @@ function LoginPage() {
       } else {
         navigate("/admin");
       }
+
       toast.success("Login Successful!");
     } catch (error) {
       toast.error("Invalid user ID or password");
@@ -43,42 +48,73 @@ function LoginPage() {
 
   return (
     <AuthenTemplate>
-      <h1>Login Form</h1>
-      <Form
-        labelCol={{
-          span: 24,
-        }}
-        confirmLoading={submitting}
-        onFinish={handleLogin}
-      >
-        <Form.Item
-          label={<span style={{ color: "white" }}>UserID</span>}
-          name="userId"
-          rules={[
-            {
-              required: true,
-              message: "You must input your user ID",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label={<span style={{ color: "white" }}>Password</span>}
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "You must input your password",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Button type="primary" htmlType="submit" loading={submitting}>
-          Login
-        </Button>
-      </Form>
+      {/* Thêm video nền */}
+      <div className="login-container">
+        <video autoPlay muted loop className="background-video">
+          <source src="../../vid.mp4" type="video/mp4" />
+        </video>
+        <div className="login-form">
+          <h1>Login Form</h1>
+          <Form
+            labelCol={{
+              span: 24,
+            }}
+            confirmLoading={submitting}
+            onFinish={handleLogin}
+          >
+            <Form.Item
+              label={<span style={{ color: "rgb(4, 57, 131)" }}>UserID</span>}
+              name="userId"
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <span
+                      style={{ color: "rgb(242, 135, 5)", fontWeight: "bold" }}
+                    >
+                      YOU MUST INPUT YOUR USER ID
+                    </span>
+                  ),
+                },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="Enter your userID"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label={<span style={{ color: "rgb(4, 57, 131)" }}>Password</span>}
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <span
+                      style={{
+                        color: "rgb(242, 135, 5)",
+                        fontWeight: "bold,",
+                      }}
+                    >
+                      YOU MUST INPUT YOUR PASSWORD
+                    </span>
+                  ),
+                },
+              ]}
+            >
+              <Input.Password
+                prefix={<LockOutlined />}
+                placeholder="Enter your password"
+              />
+            </Form.Item>
+
+            <Button type="primary" htmlType="submit" loading={submitting}>
+              Login
+            </Button>
+          </Form>
+        </div>
+      </div>
     </AuthenTemplate>
   );
 }
