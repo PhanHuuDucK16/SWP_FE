@@ -11,7 +11,7 @@ import "./login.css"; // Import file CSS
 function LoginPage() {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
-  const api = "https://66fce102c3a184a84d183d14.mockapi.io/Account";
+  const api = "https://localhost:7182/Manager";
   const dispatch = useDispatch();
 
   const handleLogin = async (values) => {
@@ -77,6 +77,7 @@ function LoginPage() {
                   ),
                 },
               ]}
+              style={{ margin: "0px 10px" }}
             >
               <Input
                 prefix={<UserOutlined />}
@@ -102,6 +103,7 @@ function LoginPage() {
                   ),
                 },
               ]}
+              style={{ margin: "0px 10px" }}
             >
               <Input.Password
                 prefix={<LockOutlined />}
